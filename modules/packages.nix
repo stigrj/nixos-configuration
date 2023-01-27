@@ -28,6 +28,7 @@ let
       bind
       file
       bc
+      bun
       sshuttle
       lsof
       patchelf
@@ -46,6 +47,10 @@ let
       home-manager
       google-authenticator
       nh
+      zathura
+      cmake
+      doxygen
+      graphviz
     ];
   };
 in
