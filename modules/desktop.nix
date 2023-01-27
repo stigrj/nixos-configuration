@@ -61,6 +61,11 @@ let
     services.printing.enable = true;
     services.printing.drivers = [ pkgs.hplip ];
 
+    services.printing.listenAddresses = [ "0.0.0.0" ];
+    services.avahi.enable = true;
+    services.avahi.nssmdns4 = true;
+    services.avahi.openFirewall = true;
+
     services.upower.enable = true;
 
     services.displayManager = {
@@ -119,12 +124,12 @@ let
   };
 
   wayland = {
-    services.xserver.desktopManager.xterm.enable = true;
+    services.xserver.desktopManager.xterm.enable = false;
     services.xserver.displayManager.gdm.enable = true;
     services.xserver.displayManager.gdm.wayland = true;
     programs.regreet = {
-      enable = false;
-      cageArgs = [ "-s" "-m" "last" ];
+      enable = true;
+      cageArgs = [ "-s" "-m" "extend" ];
       settings = {
         background = {
            path = "${pkgs.nixos-artwork.wallpapers.mosaic-blue}/share/backgrounds/nixos/nix-wallpaper-mosaic-blue.png";

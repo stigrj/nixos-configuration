@@ -52,7 +52,7 @@ let
     };
 
     nix = {
-        #package = pkgs.nixVersions.stable;
+        package = pkgs.nixVersions.stable;
         # package = pkgs.nixVersions.nix_2_23;
         extraOptions = ''
           experimental-features = nix-command flakes impure-derivations
