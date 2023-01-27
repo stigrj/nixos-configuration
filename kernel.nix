@@ -6,6 +6,6 @@ in
 
     boot = {
       extraModulePackages = [];
-      # kernelPackages = pkgs.linuxPackages_5_9;
+      # kernelPackages = pkgs.linuxPackages_6_2;
     };
   }

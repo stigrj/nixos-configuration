@@ -9,7 +9,17 @@ let
   cfg = config.features.desktop;
 
   configuration = {
-    hardware.bluetooth.enable = true;
+    hardware.bluetooth = {
+      enable = true;
+      package = pkgs.bluez;
+      powerOnBoot = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
+    };
+
     services.pulseaudio = {
       enable = false;
       extraModules = [ ];
@@ -68,6 +78,11 @@ let
 
     services.printing.enable = true;
     services.printing.drivers = [ pkgs.hplip ];
+
+    services.printing.listenAddresses = [ "0.0.0.0" ];
+    services.avahi.enable = true;
+    services.avahi.nssmdns4 = true;
+    services.avahi.openFirewall = true;
 
     services.upower.enable = lib.mkDefault true;
 
@@ -128,15 +143,15 @@ let
   };
 
   wayland = {
-    # services.xserver.desktopManager.xterm.enable = true;
+    # services.xserver.desktopManager.xterm.enable = false;
     services.displayManager.gdm.enable = true;
     services.displayManager.gdm.wayland = true;
     programs.regreet = {
-      enable = false;
+      enable = true;
       cageArgs = [
         "-s"
         "-m"
-        "last"
+        "extend"
       ];
       settings = {
         background = {
