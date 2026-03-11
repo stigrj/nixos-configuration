@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.features.packages;
@@ -23,6 +28,7 @@ let
       bind
       file
       bc
+      bun
       sshuttle
       lsof
       patchelf
@@ -40,9 +46,14 @@ let
       fuse
       home-manager
       google-authenticator
+      zathura
+      cmake
+      doxygen
+      graphviz
     ];
   };
-in {
+in
+{
   options.features.packages = {
     enable = mkOption {
       type = types.bool;
