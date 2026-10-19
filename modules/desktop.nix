@@ -10,7 +10,17 @@ let
   sources = import ../npins;
 
   configuration = {
-    hardware.bluetooth.enable = true;
+    hardware.bluetooth = {
+      enable = true;
+      package = pkgs.bluez;
+      powerOnBoot = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
+    };
+
     services.pulseaudio = {
       enable = false;
       extraModules = [ ];
@@ -70,6 +80,11 @@ let
     services.printing.enable = true;
     services.printing.drivers = [ pkgs.hplip ];
 
+    services.printing.listenAddresses = [ "0.0.0.0" ];
+    services.avahi.enable = true;
+    services.avahi.nssmdns4 = true;
+    services.avahi.openFirewall = true;
+
     services.upower.enable = lib.mkDefault true;
 
     services.displayManager = {
@@ -111,8 +126,8 @@ let
       '';
     };
     services.xserver.xkb = lib.mkDefault {
-      layout = "us";
-      variant = "altgr-intl";
+      layout = "no";
+      model = "pc104";
       options = "eurosign:e";
     };
 
@@ -120,6 +135,8 @@ let
 
   wayland = {
     services = {
+      displayManager.defaultSession = "hyprland";
+      #displayManager.sessionPackages = lib.mkForce [ pkgs.niri ];
       displayManager.gdm.enable = true;
       greetd.settings.default_session.user = "greeter";
     };
@@ -173,18 +190,10 @@ let
 
   tiling = {
     programs = {
-      niri.enable = true;
+      niri.enable = false;
       hyprland.enable = true;
-      hyprlock.enable = true;
+      #hyprlock.enable = false;
       waybar.enable = false;
-    };
-
-    security = {
-      pam.services.hyprlock = {
-        text = ''
-          auth include login
-        '';
-      };
     };
   };
 
